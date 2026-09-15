@@ -46,7 +46,7 @@ class ResourceDetails extends HTMLElement {
       const detailsContainer = document.createElement('div');
       detailsContainer.classList.add('card-body');
       const { title, summary, category, location, hours, contact } = this.#resource; // Object destructuring syntax
-      detailsContainer.container.innerHTML = `
+      detailsContainer.innerHTML = `
         <h2 class="h5">${title}</h2>
         <p class="text-body-secondary mb-2">${summary}</p>
 
