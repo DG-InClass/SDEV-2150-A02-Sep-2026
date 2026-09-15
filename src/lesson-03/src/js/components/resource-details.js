@@ -8,25 +8,10 @@ template.innerHTML = `
         <strong>Details</strong>
       </div>
 
-      <div class="card-body">
-        <h2 class="h5">Peer Tutoring Centre</h2>
-        <p class="text-body-secondary mb-2">Drop-in tutoring and study support.</p>
+      <!-- Details content will be injected here -->
+      <slot></slot>
 
-        <dl class="row mb-0">
-          <dt class="col-4">Category</dt>
-          <dd class="col-8">Academic</dd>
-
-          <dt class="col-4">Location</dt>
-          <dd class="col-8">Building W, Room W101</dd>
-
-          <dt class="col-4">Hours</dt>
-          <dd class="col-8">Mon-Thu 10:00-16:00</dd>
-
-          <dt class="col-4">Contact</dt>
-          <dd class="col-8">tutoring@nait.ca</dd>
-        </dl>
-      </div>
-
+      <!-- Action buttons may be dealt with in the future... -->
       <div class="card-footer d-flex gap-2">
         <button class="btn btn-outline-secondary" type="button">Copy email</button>
         <button class="btn btn-outline-primary" type="button">Open map</button>
@@ -36,6 +21,7 @@ template.innerHTML = `
 
 class ResourceDetails extends HTMLElement {
   // TODO: Create private field for resource data
+  #resource = null;
 
   constructor() {
     super();
@@ -47,11 +33,39 @@ class ResourceDetails extends HTMLElement {
   }
 
   // TODO: Implement setter for resource data, remember to render
+  set resource(data) {
+    this.#resource = data;
+    this.render();
+  }
 
   render() {
     // TODO: Render resource details if available
-
+    this.shadowRoot.innerHTML = ''; // Clear the contents (for re-painting)
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    if (this.#resource) {
+      const detailsContainer = document.createElement('div');
+      detailsContainer.classList.add('card-body');
+      const { title, summary, category, location, hours, contact } = this.#resource; // Object destructuring syntax
+      detailsContainer.container.innerHTML = `
+        <h2 class="h5">${title}</h2>
+        <p class="text-body-secondary mb-2">${summary}</p>
+
+        <dl class="row mb-0">
+          <dt class="col-4">Category</dt>
+          <dd class="col-8">${category}</dd>
+          
+          <dt class="col-4">Location</dt>
+          <dd class="col-8">${location}</dd>
+          
+          <dt class="col-4">Hours</dt>
+          <dd class="col-8">${hours}</dd>
+          
+          <dt class="col-4">Contact</dt>
+          <dd class="col-8">${contact}</dd>
+        </dl>
+      `;
+      this.shadowRoot.querySelector('slot').appendChild(detailsContainer);
+    }
   }
 }
 
