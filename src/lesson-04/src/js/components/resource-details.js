@@ -64,7 +64,10 @@ class ResourceDetails extends HTMLElement {
     } else {
       // If no resource is selected, just render the template
       this.shadowRoot.innerHTML = '';
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
+      // Hide action buttons when no resource is selected
+      const content = template.content.cloneNode(true);
+      content.querySelector('.card-footer').classList.add('d-none');
+      this.shadowRoot.appendChild(content);
     }
   }
 }

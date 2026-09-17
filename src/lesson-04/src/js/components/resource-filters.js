@@ -84,7 +84,7 @@ class ResourceFilters extends HTMLElement {
     event.preventDefault(); // we don't have an actual "back-end"
     // TODO: Build a filters object: { query, category, openNow, virtual }.
     const query = this.shadowRoot.querySelector('#q').value.trim();
-    const categoryGroup = this.shadowRoot.querySelector('[aria-label="category filters"]');
+    const categoryGroup = this.shadowRoot.querySelector('[aria-label="Category filters"]');
     const categoryButton = categoryGroup.querySelector('.active') || categoryGroup.querySelector('button');
     const category = categoryButton ? categoryButton.textContent.trim().toLowerCase() : 'all';
     const openNow = this.shadowRoot.querySelector('#openNow').checked;
