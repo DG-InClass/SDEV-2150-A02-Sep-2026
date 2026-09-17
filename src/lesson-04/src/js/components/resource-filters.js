@@ -17,7 +17,7 @@ template.innerHTML = `
           <div class="mb-2"><strong>Category</strong></div>
           <div class="d-flex flex-wrap gap-2" aria-label="Category filters">
             <!-- TODO: Set active state on All category button -->
-            <button class="btn btn-sm btn-outline-primary" type="button">All</button>
+            <button class="btn btn-sm btn-outline-primary active" type="button">All</button>
             <button class="btn btn-sm btn-outline-primary" type="button">Academic</button>
             <button class="btn btn-sm btn-outline-primary" type="button">Wellness</button>
             <button class="btn btn-sm btn-outline-primary" type="button">Financial</button>
@@ -53,6 +53,9 @@ class ResourceFilters extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     // TODO: Bind event handler methods
+    // We are making our event handlers aware of the instance of the ResourceFilter
+    this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleCategoryClick = this._handleCategoryClick.bind(this);
   }
 
   // TODO: Manage lifecycle and events (i.e., connectedCallback, disconnectedCallback).
@@ -60,16 +63,54 @@ class ResourceFilters extends HTMLElement {
     this.render();
     // Step 2: On form submit, preventDefault, read values, and dispatch `resource-filters-changed`.
     // TODO: Add a submit listener to #frm-filter.
-    
+    this._formEl = this.shadowRoot.querySelector('#frm-filter');
+    this._formEl.addEventListener('submit', this._handleSubmit);
     // TODO: Add click listener to category buttons.
+    this._categoryGroupEl = this.shadowRoot.querySelector('[aria-label="Category filters"]');
+    this._categoryGroupEl.addEventListener('click', this._handleCategoryClick);
   }
-  
+
+  disconnectedCallback() {
+    if (this._formEl) {
+      this._formEl.removeEventListener('submit', this._handleSubmit);
+    }
+    if (this._categoryGroupEl) {
+      this._categoryGroupEl.removeEventListener('click', this._handleCategoryClick);
+    }
+  }
+
   // Step 2: Create submit handler method.
-  // TODO: Build a filters object: { query, category, openNow, virtual }.
-  // TODO: Dispatch a bubbling + composed CustomEvent('resource-filters-changed', { detail: filters }).
+  _handleSubmit(event) {
+    event.preventDefault(); // we don't have an actual "back-end"
+    // TODO: Build a filters object: { query, category, openNow, virtual }.
+    const query = this.shadowRoot.querySelector('#q').value.trim();
+    const categoryGroup = this.shadowRoot.querySelector('[aria-label="category filters"]');
+    const categoryButton = categoryGroup.querySelector('.active') || categoryGroup.querySelector('button');
+    const category = categoryButton ? categoryButton.textContent.trim().toLowerCase() : 'all';
+    const openNow = this.shadowRoot.querySelector('#openNow').checked;
+    const virtual = this.shadowRoot.querySelector('#virtual').checked;
+    const filters = { query, category, openNow, virtual, };
+
+    // TODO: Dispatch a bubbling + composed CustomEvent('resource-filters-changed', { detail: filters }).
+    const filtersEvent = new CustomEvent('resource-filters-changed', {
+      detail: filters, bubbles: true, composed: true,
+    });
+    this.dispatchEvent(filtersEvent);
+  }
 
   // Step 2: Create category button click handler method.
   // TODO: Handle category button clicks to set active state.
+  _handleCategoryClick(event) {
+    const button = event.target.closest('button');
+    if (button && this._categoryGroupEl.contains(button)) {
+      // they have clicked on a button within my component
+      const activeButton = this._categoryGroupEl.querySelector('.active');
+      if (activeButton && activeButton !== button) {
+        activeButton.classList.remove('active');
+      }
+      button.classList.add('active');
+    }
+  }
 
   render() {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
