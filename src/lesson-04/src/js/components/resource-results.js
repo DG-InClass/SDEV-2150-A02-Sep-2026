@@ -115,6 +115,8 @@ class ResourceResults extends HTMLElement {
 
       return true;
     });
+
+    this.render();
   }
 
   render() {

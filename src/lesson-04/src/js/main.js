@@ -60,6 +60,7 @@ resultsComponent.results = resultData;
 // TODO: Pass filters to results via resultsComponent.setFilters(filters) or resultsComponent.filters = filters.
 const filtersComponent = document.querySelector('resource-filters');
 filtersComponent.addEventListener('resource-filters-changed', (event) => {
+  debugger
   // TODO: Reset details view when new filters are applied (clear previous selection).
   resultsComponent.filters = event.detail;
   detailsComponent.resource = null;
