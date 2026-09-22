@@ -35,6 +35,18 @@ class ResourceResults extends HTMLElement {
   }
 
   // TODO: Stage 2: Observe the `source` attribute
+  static observedAttributes = ['source']; // An array of the attributes we will respond to
+  // <resource-results source="http://localhost:3000/resources">
+  // </resource-results>
+
+  attributesChangedCallback(name, oldValue, newValue) {
+    if (name === 'source' && oldValue !== newValue) {
+      // Check if this component is attached to the DOM
+      if (this.isConnected) {
+        // We will fetch the data
+      }
+    }
+  }
 
   set results(data) {
     this.#results = data;
