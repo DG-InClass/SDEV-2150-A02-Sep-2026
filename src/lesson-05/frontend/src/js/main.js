@@ -6,7 +6,6 @@ import './components/resource-details.js';
 
 const resultsComponent = document.querySelector('resource-results');
 
-
 // Filters emit state, main.js updates results and resets details
 const filtersComponent = document.querySelector('resource-filters');
 filtersComponent.addEventListener('resource-filters-changed', (event) => {

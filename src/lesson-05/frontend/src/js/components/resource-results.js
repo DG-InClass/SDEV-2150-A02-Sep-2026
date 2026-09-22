@@ -41,14 +41,14 @@ class ResourceResults extends HTMLElement {
   // <resource-results source="http://localhost:3000/resources">
   // </resource-results>
 
-  attributesChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name, oldValue, newValue) {
     console.log('noticed a change to:', name)
     if (name === 'source' && oldValue !== newValue) {
       // Check if this component is attached to the DOM
       if (this.isConnected) {
         // We will fetch the data
         getResources(newValue)  // Promise<Object[]>
-          .then(this.results)   // .then(handler)
+          .then(data => { this.results = data })   // .then(handler)
           .catch((err) => {     // .catch(handler)
             console.log(err);
             // TODO: Show something useful to the user

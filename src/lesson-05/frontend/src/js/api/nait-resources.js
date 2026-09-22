@@ -7,6 +7,7 @@
  * @returns {Promise<Object[]>} - Parsed JSON data
  */
 export function getResources(url) {
+    console.log(url);
     return fetch(url).then(handleJsonResponse).catch(wrapErrors);
     // I'm using callbacks \________________/        \________/
 }
@@ -38,7 +39,7 @@ function handleJsonResponse(response) {
         throw new Error(`Network response was not ok: (${response.status}) ${response.statusText}`);
     }
     // Check that the info we got is actually JSON
-    const contentType = response.headers.get('content type');
+    const contentType = response.headers.get('content-type');
     if(!contentType || !contentType.includes('application/json')) {
         // We've received something other than JSON
         throw new Error(`Response is not JSON: ${contentType}`);
@@ -55,6 +56,6 @@ function handleJsonResponse(response) {
  */
 function wrapErrors(error) {
     const wrapped = new Error('Unable to complete data request', { cause: error?.cause});
-    return new Promise(wrapped);
+    throw wrapped;
 }
 // #endregion
