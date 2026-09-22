@@ -1,3 +1,5 @@
+import { getResources } from '../api/nait-resources';
+
 const template = document.createElement('template');
 template.innerHTML = `
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
@@ -40,15 +42,23 @@ class ResourceResults extends HTMLElement {
   // </resource-results>
 
   attributesChangedCallback(name, oldValue, newValue) {
+    console.log('noticed a change to:', name)
     if (name === 'source' && oldValue !== newValue) {
       // Check if this component is attached to the DOM
       if (this.isConnected) {
         // We will fetch the data
+        getResources(newValue)  // Promise<Object[]>
+          .then(this.results)   // .then(handler)
+          .catch((err) => {     // .catch(handler)
+            console.log(err);
+            // TODO: Show something useful to the user
+          });
       }
     }
   }
 
   set results(data) {
+    console.log('results setter: ',data)
     this.#results = data;
     this.#filteredResults = [...data];
     this.render();
