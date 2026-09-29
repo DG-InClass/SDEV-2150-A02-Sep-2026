@@ -4,6 +4,11 @@ import javascriptLogo from './assets/javascript.svg'
 import viteLogo from './assets/vite.svg'
 import { setupCounter } from './counter.js'
 
+import { announcement } from './announcement.jsx';
+document.body.prepend(announcement('We have evolved!'));
+
+// This vanilla JavaScript uses a template string
+// to set the .innerHTML of our <div id="app"></div>
 document.querySelector('#app').innerHTML = `
 <section id="center">
   <div class="hero">

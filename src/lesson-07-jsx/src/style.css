@@ -168,6 +168,19 @@ code {
   box-sizing: border-box;
 }
 
+.banner {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: gold;
+  font-weight: 500;
+}
+
 #center {
   display: flex;
   flex-direction: column;
