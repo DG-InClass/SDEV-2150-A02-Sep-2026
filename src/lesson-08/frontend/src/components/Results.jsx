@@ -1,5 +1,6 @@
 // src/components/Results.jsx
 import { resources } from '../data/resources';
+import ResultsItem from './ResultsItem';
 
 export default function Results() {
   return (
@@ -15,19 +16,16 @@ export default function Results() {
         <ul className="divide-y divide-gray-200">
           {/* INFO: Could just copy/paste individual buttons, but this is more maintainable */}
           { resources.map((item) => (
-            <li
-              key={item.title}
-              className="w-full text-left px-4 py-3 text-gray-900 hover:bg-gray-50"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h2 className="text-sm font-semibold">{item.title}</h2>
-                <small className="text-xs text-gray-500">{item.category}</small>
-              </div>
-              <p className="mt-1 text-xs text-gray-500">{item.summary}</p>
-              <small className="mt-1 block text-xs text-gray-500">
-                {item.location}
-              </small>
-            </li>
+            <ResultsItem key={item.id} title={item.title} category={item.category} location={item.location} summary={item.summary} >
+              {/* Anything between the open/close tags is a child */}
+              {
+                item.openNow && (
+                  <span className='rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800'>
+                    Open now
+                  </span>
+                )
+              }
+            </ResultsItem>
           ))}
         </ul>
       </div>
