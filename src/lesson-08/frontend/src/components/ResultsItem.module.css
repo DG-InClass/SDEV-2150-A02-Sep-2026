@@ -1,0 +1,25 @@
+/* frontend/src/components/ResultsItem.module.css */
+@import "tailwindcss";
+
+li {
+    @apply w-full text-left px-4 py-3 text-gray-900 hover:bg-gray-50;
+
+    div {
+        @apply flex items-start justify-between gap-3;
+
+        h2 {
+            @apply text-sm font-semibold;
+        }
+        small {
+            @apply text-xs text-gray-500;
+        }
+    }
+
+    p {
+        @apply mt-1 text-xs text-gray-500;
+    }
+
+    small {
+        @apply mt-1 block text-xs text-gray-500;
+    }
+}
