@@ -7,17 +7,18 @@ import PageLayout from './components/layout/PageLayout';
 function App() {
   return (
     <PageLayout header={<Header tagline="Find the right resources, right away" />}>
-      <Filters />
-      <Results />
-      <Details />
-    </PageLayout>
-    // <PageLayout
-    //   header={<Header tagline="Find the right resources, right away" />}
-    //   left={<Filters />}
-    //   middle={<Results />}
-    //   right={<Details />}
-    // />
+      <div className="md:col-span-3 lg:col-span-1">
+        <Filters />
+      </div>
 
+      <div className="md:col-span-2 lg:col-span-1">
+        <Results />
+      </div>
+
+      <div className="md:col-span-1">
+        <Details />
+      </div>
+    </PageLayout>
   );
 }
 
