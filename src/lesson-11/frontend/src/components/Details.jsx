@@ -28,13 +28,13 @@ export default function Details() {
       <div className="flex gap-2 border-t border-gray-200 px-4 py-3">
         <button
           type="button"
-          className="rounded border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+          className="btn btn-sm"
         >
           Copy email
         </button>
         <button
           type="button"
-          className="rounded border border-sky-600 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
+          className="btn btn-sm btn-primary"
         >
           Open map
         </button>
