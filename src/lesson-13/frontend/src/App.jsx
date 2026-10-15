@@ -1,20 +1,42 @@
+import { useState } from 'react';
 import Header from './components/Header';
 import Filters from './components/Filters';
 import Results from './components/Results';
 import Details from './components/Details';
 import PageLayout from './components/layout/PageLayout';
+import { resources } from './data/resources';
 
 function App() {
+  const [selectedResource, setSelectedResource] = useState(resources[0]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [openNowOnly, setOpenNowOnly] = useState(false);
+
   return (
     <PageLayout header={<Header tagline="Find the right resources, right away" />}>
       <aside className="md:col-span-3 lg:col-span-1">
-        <Filters />
+        <Filters
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          openNowOnly={openNowOnly}
+          setOpenNowOnly={setOpenNowOnly}
+        />
       </aside>
       <section className="md:col-span-2 lg:col-span-1">
-        <Results />
+        <Results
+          selectedResource={selectedResource}
+          setSelectedResource={setSelectedResource}
+          query={searchTerm}
+          categories={selectedCategories}
+          openNowOnly={openNowOnly}
+        />
       </section>
       <aside className="md:col-span-1 lg:col-span-1">
-        <Details />
+        <Details
+          selectedResource={selectedResource}
+        />
       </aside>
     </PageLayout>
     // <PageLayout

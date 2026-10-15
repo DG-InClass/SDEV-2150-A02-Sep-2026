@@ -1,16 +1,28 @@
-import { useState } from 'react';
-
 import ResultsItem from './ResultsItem';
 import { resources } from '../data/resources';
 import Card from './ui/Card';
 
-export default function Results() {
-  const [selectedResource, setSelectedResource] = useState(null);
+export default function Results({ selectedResource, setSelectedResource, query, categories, openNowOnly }) {
+  const matchesFilters = (resource) => {
+    // Does the resource contain the query text?
+    const queryLowerCase = query.trim().toLowerCase();
+    const matchesSearchText = resource.title.toLowerCase().includes(queryLowerCase);
+
+    // Does the resource's category exist in the filter categories?
+    const matchesCategory = categories.length === 0 || categories.includes(resource.category);
+
+    // Does the resource have to be open right now?
+    const matchesOpenNow = !openNowOnly || resource.openNow;
+
+    return matchesSearchText && matchesCategory && matchesOpenNow;
+  }
+
+  const filteredResources = resources.filter(matchesFilters);
 
   return (
     <Card title="Results">
       <ul className="divide-y divide-gray-200">
-        {resources.map((r) => (
+        {filteredResources.map((r) => (
           <ResultsItem
             key={r.id}
             title={r.title}

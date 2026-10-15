@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import Card from './ui/Card';
 
-export default function Filters() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [openNowOnly, setOpenNowOnly] = useState(false);
-
+export default function Filters({searchTerm, setSearchTerm, selectedCategories, setSelectedCategories, openNowOnly, setOpenNowOnly}) {
+  // The state I need as the filter is handed to me by my parent component
   function toggleCategory(category) {
     setSelectedCategories((prev) => {
       if (prev.includes(category)) {
