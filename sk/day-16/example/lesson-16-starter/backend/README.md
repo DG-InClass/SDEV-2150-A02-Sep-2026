@@ -22,6 +22,18 @@ npm start
 
 The server listens on `http://localhost:3000`.
 
+### Simulate a slow response
+
+Stop the server with Ctrl+C, then restart it with:
+
+```sh
+npm run start:slow
+```
+
+If using pnpm, run `pnpm run start:slow` instead. This adds a three-second delay to all JSON responses, including errors, so you can observe the frontend loading state. CORS preflight (`OPTIONS`) responses remain immediate.
+
+Stop the server and run `npm start` (or `pnpm start`) to return to normal response times.
+
 ## Data file
 
 Resource data is stored in `resources.json`. The server reads and writes this file on each request.

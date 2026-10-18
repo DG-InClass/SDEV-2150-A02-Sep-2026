@@ -43,6 +43,42 @@
       "contact": "it@nait.ca",
       "virtual": false,
       "openNow": true
+    },
+    {
+      "id": "learning",
+      "title": "Learning Services",
+      "category": "Academic",
+      "summary": "Meet with a Learning Advisor.",
+      "location": "W111PB",
+      "hours": "Mon-Fri 08:30-16:30",
+      "contact": "learningservices@nait.ca",
+      "url": "https://nait.ca/learningservices",
+      "virtual": false,
+      "openNow": false
+    },
+    {
+      "id": "library",
+      "title": "Library Services",
+      "category": "Academic",
+      "summary": "Search our Library Services books, articles, videos and more.",
+      "location": "U310",
+      "hours": "Mon-Fri 08:30-18:30",
+      "contact": "library@nait.ca",
+      "url": "https://nait.ca/library",
+      "virtual": false,
+      "openNow": false
+    },
+    {
+      "id": "workshops",
+      "title": "Campus Workshops",
+      "category": "Academic",
+      "summary": "Specialty workshops are provided throughout the year for various academic pursuits.",
+      "location": "Across Campus",
+      "hours": "",
+      "contact": "learningservices@nait.ca",
+      "url": "https://nait.ca/studyskills",
+      "virtual": false,
+      "openNow": false
     }
   ]
 }

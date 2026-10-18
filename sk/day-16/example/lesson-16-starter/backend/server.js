@@ -3,6 +3,15 @@ import fs from 'fs';
 import url from 'url';
 import path from 'path';
 
+// Run with --slow (see start:slow in package.json) to delay JSON responses.
+const JSON_DELAY_MS = process.argv.includes('--slow') ? 3000 : 0;
+
+const sendJson = (res, payload) => {
+  const send = () => res.end(JSON.stringify(payload));
+  if (JSON_DELAY_MS > 0) setTimeout(send, JSON_DELAY_MS);
+  else send();
+};
+
 const DATA_FILE = path.join(process.cwd(), 'resources.json');
 const RESOURCE_FIELDS = [
   'title',
@@ -109,45 +118,45 @@ const server = http.createServer((req, res) => {
     readDatabase((err, db) => {
       if (err) {
         res.statusCode = 500;
-        return res.end(JSON.stringify({ error: 'Failed to read database' }));
+        return sendJson(res, { error: 'Failed to read database' });
       }
-      res.end(JSON.stringify(db.resources));
+      sendJson(res, db.resources);
     });
   } else if (pathname === '/resources' && method === 'POST') {
     readRequestBody(req, (bodyErr, payload) => {
       if (bodyErr) {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: 'Invalid JSON body' }));
+        return sendJson(res, { error: 'Invalid JSON body' });
       }
       const payloadId = payload?.id;
       if (payloadId !== undefined && typeof payloadId !== 'string') {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: 'Resource id must be a string' }));
+        return sendJson(res, { error: 'Resource id must be a string' });
       }
       const validationError = validateResource(payload, { requireId: false });
       if (validationError) {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: validationError }));
+        return sendJson(res, { error: validationError });
       }
       readDatabase((err, db) => {
         if (err) {
           res.statusCode = 500;
-          return res.end(JSON.stringify({ error: 'Failed to read database' }));
+          return sendJson(res, { error: 'Failed to read database' });
         }
         const newId = payloadId || generateId();
         if (db.resources.some((resource) => resource.id === newId)) {
           res.statusCode = 409;
-          return res.end(JSON.stringify({ error: `Resource ${newId} already exists` }));
+          return sendJson(res, { error: `Resource ${newId} already exists` });
         }
         const resource = buildResource(payload, newId);
         db.resources.push(resource);
         writeDatabase(db, (writeErr) => {
           if (writeErr) {
             res.statusCode = 500;
-            return res.end(JSON.stringify({ error: 'Failed to write database' }));
+            return sendJson(res, { error: 'Failed to write database' });
           }
           res.statusCode = 201;
-          res.end(JSON.stringify(resource));
+          sendJson(res, resource);
         });
       });
     });
@@ -155,60 +164,60 @@ const server = http.createServer((req, res) => {
     const match = pathname.match(/^\/resources\/([^/]+)$/);
     if (!match) {
       res.statusCode = 404;
-      return res.end(JSON.stringify({ error: 'Endpoint not found' }));
+      return sendJson(res, { error: 'Endpoint not found' });
     }
     const resourceId = decodeURIComponent(match[1]);
     readDatabase((err, db) => {
       if (err) {
         res.statusCode = 500;
-        return res.end(JSON.stringify({ error: 'Failed to read database' }));
+        return sendJson(res, { error: 'Failed to read database' });
       }
       const resource = db.resources.find((entry) => entry.id === resourceId);
       if (!resource) {
         res.statusCode = 404;
-        return res.end(JSON.stringify({ error: `Resource ${resourceId} not found` }));
+        return sendJson(res, { error: `Resource ${resourceId} not found` });
       }
-      res.end(JSON.stringify(resource));
+      sendJson(res, resource);
     });
   } else if (pathname.startsWith('/resources/') && method === 'PUT') {
     const match = pathname.match(/^\/resources\/([^/]+)$/);
     if (!match) {
       res.statusCode = 404;
-      return res.end(JSON.stringify({ error: 'Endpoint not found' }));
+      return sendJson(res, { error: 'Endpoint not found' });
     }
     const resourceId = decodeURIComponent(match[1]);
     readRequestBody(req, (bodyErr, payload) => {
       if (bodyErr) {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: 'Invalid JSON body' }));
+        return sendJson(res, { error: 'Invalid JSON body' });
       }
       if (payload?.id !== undefined && payload.id !== resourceId) {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: 'Resource id cannot be changed' }));
+        return sendJson(res, { error: 'Resource id cannot be changed' });
       }
       const validationError = validateResource({ ...payload, id: resourceId }, { requireId: true });
       if (validationError) {
         res.statusCode = 400;
-        return res.end(JSON.stringify({ error: validationError }));
+        return sendJson(res, { error: validationError });
       }
       readDatabase((err, db) => {
         if (err) {
           res.statusCode = 500;
-          return res.end(JSON.stringify({ error: 'Failed to read database' }));
+          return sendJson(res, { error: 'Failed to read database' });
         }
         const index = db.resources.findIndex((entry) => entry.id === resourceId);
         if (index === -1) {
           res.statusCode = 404;
-          return res.end(JSON.stringify({ error: `Resource ${resourceId} not found` }));
+          return sendJson(res, { error: `Resource ${resourceId} not found` });
         }
         const resource = buildResource(payload, resourceId);
         db.resources[index] = resource;
         writeDatabase(db, (writeErr) => {
           if (writeErr) {
             res.statusCode = 500;
-            return res.end(JSON.stringify({ error: 'Failed to write database' }));
+            return sendJson(res, { error: 'Failed to write database' });
           }
-          res.end(JSON.stringify(resource));
+          sendJson(res, resource);
         });
       });
     });
@@ -216,35 +225,36 @@ const server = http.createServer((req, res) => {
     const match = pathname.match(/^\/resources\/([^/]+)$/);
     if (!match) {
       res.statusCode = 404;
-      return res.end(JSON.stringify({ error: 'Endpoint not found' }));
+      return sendJson(res, { error: 'Endpoint not found' });
     }
     const resourceId = decodeURIComponent(match[1]);
     readDatabase((err, db) => {
       if (err) {
         res.statusCode = 500;
-        return res.end(JSON.stringify({ error: 'Failed to read database' }));
+        return sendJson(res, { error: 'Failed to read database' });
       }
       const index = db.resources.findIndex((entry) => entry.id === resourceId);
       if (index === -1) {
         res.statusCode = 404;
-        return res.end(JSON.stringify({ error: `Resource ${resourceId} not found` }));
+        return sendJson(res, { error: `Resource ${resourceId} not found` });
       }
       const [removed] = db.resources.splice(index, 1);
       writeDatabase(db, (writeErr) => {
         if (writeErr) {
           res.statusCode = 500;
-          return res.end(JSON.stringify({ error: 'Failed to write database' }));
+          return sendJson(res, { error: 'Failed to write database' });
         }
-        res.end(JSON.stringify(removed));
+        sendJson(res, removed);
       });
     });
   } else {
     res.statusCode = 404;
-    res.end(JSON.stringify({ error: 'Endpoint not found' }));
+    sendJson(res, { error: 'Endpoint not found' });
   }
 });
 
 const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  if (JSON_DELAY_MS > 0) console.log(`Slow mode: JSON responses delayed by ${JSON_DELAY_MS} ms.`);
 });
