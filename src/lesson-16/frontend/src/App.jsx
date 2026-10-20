@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelectedResource } from './hooks/useSelectedResource';
+import { useBackendResources } from './hooks/useBackendResources';
 
 import Header from './components/Header';
 import Filters from './components/Filters';
@@ -14,6 +15,7 @@ function App() {
   // const [selectedResource, setSelectedResource] = useState(null);
   const [selectedResource, setSelectedResource] = useSelectedResource();
   const [virtualOnly, setVirtualOnly] = useState(false);
+  const { resources } = useBackendResources();
 
   return (
     <PageLayout header={<Header tagline="Find the right resources, right away" />}>
@@ -31,6 +33,7 @@ function App() {
       </aside>
       <section className="md:col-span-2 lg:col-span-1">
         <Results
+          resources={resources}
           selectedResource={selectedResource}
           onSelectResource={setSelectedResource}
           searchTerm={searchTerm}

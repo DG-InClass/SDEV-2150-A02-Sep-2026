@@ -1,8 +1,8 @@
 import ResultsItem from './ResultsItem';
-import { resources } from '../data/resources';
+// import { resources } from '../data/resources';
 import Card from './ui/Card';
 
-export default function Results({ selectedResource, searchTerm, selectedCategories, onSelectResource, openNowOnly, virtualOnly }) {
+export default function Results({ resources, selectedResource, searchTerm, selectedCategories, onSelectResource, openNowOnly, virtualOnly }) {
   return (
     <Card title="Results">
       <ul className="divide-y divide-gray-200">
