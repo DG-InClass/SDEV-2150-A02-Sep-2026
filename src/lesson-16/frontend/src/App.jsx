@@ -15,7 +15,7 @@ function App() {
   // const [selectedResource, setSelectedResource] = useState(null);
   const [selectedResource, setSelectedResource] = useSelectedResource();
   const [virtualOnly, setVirtualOnly] = useState(false);
-  const { resources } = useBackendResources();
+  const { resources, isLoading, error } = useBackendResources();
 
   return (
     <PageLayout header={<Header tagline="Find the right resources, right away" />}>
@@ -32,6 +32,10 @@ function App() {
         />
       </aside>
       <section className="md:col-span-2 lg:col-span-1">
+        {
+          isLoading ? <p>Loading resources....</p>
+          : error ? <p>Error: {error}</p>
+          :
         <Results
           resources={resources}
           selectedResource={selectedResource}
@@ -41,6 +45,7 @@ function App() {
           openNowOnly={openNowOnly}
           virtualOnly={virtualOnly}
         />
+        }
       </section>
       <aside className="md:col-span-1 lg:col-span-1">
         {selectedResource ? (

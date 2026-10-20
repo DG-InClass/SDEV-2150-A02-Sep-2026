@@ -15,6 +15,8 @@ const API_GET_RESOURCES = `${API_BASE_URL}/resources`;
 
 export function useBackendResources() {
     const [resources, setResources] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // we haven't gotten the data
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function fetchResources() {
@@ -29,16 +31,17 @@ export function useBackendResources() {
                     throw new Error('Expected an array of resources');
                 }
                 setResources(data);
-            } catch (error) {
-                // TODO: figure out what to do....
-                console.error(error); // echo the error to the browser console
+            } catch (err) {
+                setError(err);
+                console.error(err); // echo the error to the browser console
             } finally {
                 // this runs whether there is an exception/error or not
+                setIsLoading(false); // Well, we tried (shrug)
             }
         }
 
         fetchResources();
-    });
+    }, []);
 
-    return { resources }
+    return { resources, isLoading, error }
 }
