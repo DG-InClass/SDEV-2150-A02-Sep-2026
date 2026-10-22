@@ -6,11 +6,13 @@ import path from 'path';
 // Run with --slow (see start:slow in package.json) to delay JSON responses.
 const JSON_DELAY_MS = process.argv.includes('--slow') ? 3000 : 0;
 
-const sendJson = (res, payload) => {
-  const send = () => res.end(JSON.stringify(payload));
+const sendRaw = (res, body) => {
+  const send = () => res.end(body);
   if (JSON_DELAY_MS > 0) setTimeout(send, JSON_DELAY_MS);
   else send();
 };
+
+const sendJson = (res, payload) => sendRaw(res, JSON.stringify(payload));
 
 const DATA_FILE = path.join(process.cwd(), 'resources.json');
 const RESOURCE_FIELDS = [
@@ -94,6 +96,76 @@ const validateResource = (resource, { requireId }) => {
 
 const generateId = () => `res_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
+// Run with --errors (see start:errors in package.json) to inject fake failures.
+//   --errors              about half of requests fail, with a randomly chosen fault
+//   --errors=<fault>      every request fails with that fault (e.g. --errors=403)
+//   --error-rate=<0..1>   how often random faults happen (default 0.5)
+const getArgValue = (name) => {
+  const arg = process.argv.find((a) => a === `--${name}` || a.startsWith(`--${name}=`));
+  if (!arg) return undefined;
+  return arg.includes('=') ? arg.split('=')[1] : true;
+};
+
+const FAULTS = {
+  401: (res) => {
+    res.statusCode = 401;
+    sendJson(res, { error: 'Unauthorized: missing or invalid credentials' });
+  },
+  403: (res) => {
+    res.statusCode = 403;
+    sendJson(res, { error: 'Forbidden: you do not have access to this resource' });
+  },
+  404: (res) => {
+    res.statusCode = 404;
+    sendJson(res, { error: 'Endpoint not found' });
+  },
+  500: (res) => {
+    res.statusCode = 500;
+    sendJson(res, { error: 'Internal server error' });
+  },
+  503: (res) => {
+    res.statusCode = 503;
+    res.setHeader('Retry-After', '10');
+    sendJson(res, { error: 'Service unavailable: please try again later' });
+  },
+  // 200 OK, but the body is not valid JSON (response.json() will throw)
+  malformed: (res) => {
+    sendRaw(res, '[{"id": "res_1", "title": "Peer Tutoring Centre", "category": ');
+  },
+  // 200 OK, valid JSON, but an object wrapping the array instead of the array itself
+  object: (res) => {
+    readDatabase((err, db) => {
+      const resources = err ? [] : db.resources;
+      sendJson(res, { count: resources.length, resources });
+    });
+  },
+  // 200 OK, valid JSON, but the body is an error message instead of data
+  message: (res) => {
+    sendJson(res, { error: true, message: 'Database connection timed out' });
+  },
+};
+
+const errorsArg = getArgValue('errors');
+const ERRORS_ENABLED = errorsArg !== undefined;
+const FORCED_FAULT = typeof errorsArg === 'string' ? errorsArg : null;
+const ERROR_RATE = Number(getArgValue('error-rate') ?? 0.5);
+
+if (FORCED_FAULT && !FAULTS[FORCED_FAULT]) {
+  console.error(`Unknown fault "${FORCED_FAULT}". Choose one of: ${Object.keys(FAULTS).join(', ')}`);
+  process.exit(1);
+}
+
+// Sends a fake fault and returns true, or returns false to let the request through
+const maybeInjectFault = (req, res) => {
+  if (!ERRORS_ENABLED) return false;
+  if (!FORCED_FAULT && Math.random() >= ERROR_RATE) return false;
+  const names = Object.keys(FAULTS);
+  const fault = FORCED_FAULT ?? names[Math.floor(Math.random() * names.length)];
+  console.log(`[fake error] ${req.method} ${req.url} -> ${fault}`);
+  FAULTS[fault](res);
+  return true;
+};
+
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
@@ -113,6 +185,8 @@ const server = http.createServer((req, res) => {
 
   // Set JSON response header for all responses
   res.setHeader('Content-Type', 'application/json');
+
+  if (maybeInjectFault(req, res)) return;
 
   if (pathname === '/resources' && method === 'GET') {
     readDatabase((err, db) => {
@@ -257,4 +331,6 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   if (JSON_DELAY_MS > 0) console.log(`Slow mode: JSON responses delayed by ${JSON_DELAY_MS} ms.`);
+  if (FORCED_FAULT) console.log(`Error mode: every request fails with "${FORCED_FAULT}".`);
+  else if (ERRORS_ENABLED) console.log(`Error mode: ${Math.round(ERROR_RATE * 100)}% of requests fail with a random fault.`);
 });
