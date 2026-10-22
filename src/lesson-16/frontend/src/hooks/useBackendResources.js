@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 // URLs used for fetching the API endpoints
 const API_BASE_URL = 'http://localhost:3000';
 const API_GET_RESOURCES = `${API_BASE_URL}/resources`;
+const TIMEOUT_MS = 5000;
 
 export function useBackendResources() {
     const [resources, setResources] = useState([]);
@@ -19,29 +20,56 @@ export function useBackendResources() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function fetchResources() {
-            try {
-                const response = await fetch(API_GET_RESOURCES);
+        // The controller lets our cleanup function cancel the request (e.g. on unmount)
+        const controller = new AbortController();
+        // Cancel if WE abort it, OR if the server takes too long
+        const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(TIMEOUT_MS)]);
+
+        console.log('effect: fetch started');
+
+        fetch(API_GET_RESOURCES, { signal })
+            .catch((err) => {
+                // fetch() only rejects when no response arrived at all
+                if (err.name === 'TimeoutError') {
+                    throw new Error('The server took too long to respond.', { cause: err });
+                }
+                throw new Error('Could not reach the server. Is the backend running?', { cause: err });
+            })
+            .then((response) => {
                 // validation
-                if (!response.ok) {
+                if (!response.ok){
                     throw new Error(`Request failed: ${response.status} ${response.statusText}`);
                 }
-                const data = await response.json(); // TODO: validate content-type
-                if(!Array.isArray(data)) {
-                    throw new Error('Expected an array of resources');
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error(`Server did not return a JSON payload. ${contentType}`);
                 }
+                return response.json(); // TODO: validate content-type
+            })
+            .then((data) => {
+                if (!Array.isArray(data)) {
+                    throw new Error('Expected an array of NAIT resources');
+                }
+                console.log('data arrived');
                 setResources(data);
-            } catch (err) {
-                setError(err);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                if (controller.signal.aborted) {
+                    // We cancelled it on purpose, so it's not an error to show user
+                    console.log('request was cancelled (ignored)');
+                    return;
+                }
+                setError(err.message);
+                setIsLoading(false);
                 console.error(err); // echo the error to the browser console
-            } finally {
-                // this runs whether there is an exception/error or not
-                setIsLoading(false); // Well, we tried (shrug)
-            }
-        }
+            });
 
-        fetchResources();
+        // Cleanup: runs when the component unmounts (or before the effect re-runs)
+        return () => {
+            console.log('cleanup: aborting');
+        };
     }, []);
 
-    return { resources, isLoading, error }
+    return { resources, isLoading, error };
 }
