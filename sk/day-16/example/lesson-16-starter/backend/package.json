@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "start:slow": "node server.js --slow"
+    "start:slow": "node server.js --slow",
+    "start:errors": "node server.js --errors"
   },
   "keywords": [],
   "author": "",
