@@ -1,0 +1,441 @@
+# Agenda (SDEV-2150 | A03)
+
+We meet on **Wednesdays** and **Fridays**
+
+> These are my notes on what I plan to teach in each [**upcoming class**](#day-27--apr-17). Also check out the [**Draft Planning Calendar**](./Calendar.md).
+>
+> ###### *... Warn those who are idle ..., encourage the disheartened, help the weak, be patient with everyone.*
+>
+> > My philosophy of teaching, taken from [the source](https://www.bible.com/bible/111/1TH.5.14.NIV)
+
+----
+
+> ## Starter Kits
+>
+> I provide a number of starter kits through the term, which you can grab using the process described below.
+>
+> 📖 These starter kits often have lots of `ReadMe.md` files. That means I want you to **read** that information. 👀
+>
+> To grab a starting point for any in-class demos or practices, you can use [**tiged**](https://github.com/tiged/tiged) (based on [`degit`](https://github.com/Rich-Harris/degit) by Rich Harris, creator of Svelte). It will allow you to grab a copy of the starter kit folder to put into your student workbook.
+> 
+> You will need to have `pnpm` installed and working on your computer. Run the following code in the terminal from the **root** of your repository:
+>
+> ```bash
+> pnpm dlx tiged --disable-cache --force dgilleland/CPSC-1520-Workbook/sk/-how-to- ./src/-how-to-
+> ```
+>
+> ***Note:** You may need to <kbd>ctrl</kbd>+<kbd>c</kbd> to stop the `pnpm tlx tiged` command after it has finished downloading the demo folder.*
+
+
+----
+
+## Jan-Apr 2026 Schedule
+
+### Day 1 | Jan 09
+
+- **Today**
+  - Course Introduction
+  - Confirm GitHub Account and Software Setup
+    - VS Code **Profiles**
+  - Workbook Setup
+    - Instructor Workbook
+- **Homework:**
+  - Refer to my [**system setup guide**](https://dgilleland.github.io/CPSC-1520/tutorials/0010/) if you have any problems/issues with your software.
+
+
+----
+
+### Day 2 | Jan 14
+
+- **Today**
+  - Confirm GitHub Account and Software Setup
+    - VS Code **Profiles**
+  - Workbook Setup
+    - Student Workbook
+    - Instructor Workbook
+  - Terminal commands (review)
+  - JavaScript (review)
+- **Homework**
+
+### Day 3 | Jan 16
+
+- **Today**
+  - Our "Day 1" JavaScript Review
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-01/example/lesson-01-starter ./src/lesson-01
+    ```
+
+  - Our "Day 2" JavaScript Review - Web Components
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-02/example/lesson-02-starter ./src/lesson-02
+    ```
+
+- **Homework**
+
+
+----
+
+### Day 4 | Jan 21
+
+- **Today**
+  - Our "Day 2" JavaScript Review - Complete the **Web Components and Composition**
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-02/example/lesson-02-starter ./src/lesson-02
+    ```
+
+- **Homework**
+  - Scan and **bookmark** the [web.dev article on **Custom Elements**](https://web.dev/articles/custom-elements-v1)
+
+### Day 5 | Jan 23
+
+- **Announcements**
+  - *I posted [the fix from lesson 02](https://github.com/DG-InClass/SDEV-2150-A03-Jan-2026/issues/2).*
+  - **Assignment 1 Available**
+  - **Quiz 2 Cutoff...**
+    - [x] JavaScript and browser environment
+    - [ ] Async operations
+    - [x] Web components
+    - [ ] Events
+    - [ ] Design patterns
+- **Today**
+  - 🙏 Our "Day 3" JavaScript Review - **Reactive Patterns and Advanced UI Communication**
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-03/example/lesson-03-starter ./src/lesson-03
+    ```
+
+- **Homework**
+  - Try completing the `resource-details.js` by following [these instructions](https://dg-inclass.github.io/sdev-2150/lessons/03/#modify-resource-detailsjs)
+
+----
+
+### Day 6 | Jan 28
+
+- **Today**
+  - Our "Day 4" JavaScript Review - [**Advanced UI Communication with Custom Events**](https://dg-inclass.github.io/sdev-2150/lessons/04/)
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-04/example/lesson-04-starter ./src/lesson-04
+    ```
+
+- **Homework**
+
+### Day 7 | Jan 30
+
+- **Today**
+  - Our "Day 5" JavaScript Review - [**Asynchronous Programming Review**](https://dg-inclass.github.io/sdev-2150/lessons/05/)
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-05/example/lesson-05-starter ./src/lesson-05
+    ```
+
+  - Our "Day 7" React Intro - [**Framework Foundations and Component Building**](https://dg-inclass.github.io/sdev-2150/lessons/07/)
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-07/example/lesson-07-starter ./src/lesson-07
+    ```
+
+- **Homework**
+  - For more on Custom Elements (Web Components), see
+    - [These MDN Examples](https://github.com/mdn/web-components-examples)
+    - [This MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+  - *Are you looking to practice/review some JavaScript basics with stand-alone `*.js` files (no HTML/CSS/React/Browser/etc.)? The grab this starter kit!*
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/js-quickstart ./src/js-quickstart
+    ```
+
+### Day 8 | Feb 4
+
+
+- **Today**
+  - Continue Lesson 7 to [add TailwindCSS](https://dg-inclass.github.io/sdev-2150/lessons/07/#phase-2-configuring-tailwind-css)
+  - Continue Lesson 7 [for our components](https://dg-inclass.github.io/sdev-2150/lessons/07/#phase-3-creating-static-react-components)
+  - Detour to explore with JavaScript Quickstarts
+    - If you haven't grabbed the quickstart from the previous day's ***Homework***, do so now.
+    - Explore [obj-ref.js](./src/js-quickstart/obj-ref.js)
+    - Explore [func-as-obj.js](./src/js-quickstart/func-as-obj.js)
+    - Explore [callbacks.js](./src/js-quickstart/callbacks.js)
+    - Explore [array-functions.js](./src/js-quickstart/array-functions.js)
+- **Homework**
+  - Read [Your UI as a Tree](https://react.dev/learn/understanding-your-ui-as-a-tree)
+  - Learn from the **official** docs with [Tic-Tac-Toe](https://react.dev/learn/tutorial-tic-tac-toe). This is a longer tutorial, but it goes over all of the high-points of React and is a great example to introduce and/or reinforce the material in this course.
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/tic-tac-toe ./src/tic-tac-toe
+    ```
+
+
+
+### Day 9 | Feb 6
+
+- **Today**
+  - Lesson 7 - Bootstrap to Tailwind conversion [using AI](./src/lesson-07/frontend-react/DetailsConversion.md)
+  - Lesson 8 - [State and Props](https://dg-inclass.github.io/sdev-2150/lessons/08/)
+
+    ```ps
+    pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-08/example/lesson-08-starter ./src/lesson-08
+    ```
+
+- **Homework**
+  - Read [Editor Setup](https://react.dev/learn/editor-setup)
+  - Read [React Developer Tools](https://react.dev/learn/react-developer-tools)
+
+
+### Day 10 | Feb 11
+
+- **Today**
+  - ***Check-In***
+    - Brightspace
+      - Are you encountering any Textbook Readings?
+      - Are you seeing any good links/notes in Brightspace?
+    - Lesson 9 - [Component Design](https://dg-inclass.github.io/sdev-2150/lessons/09/)
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-09/example/lesson-09-starter ./src/lesson-09
+      ```
+
+- **Homework**
+  - Explain what is meant by a **Presentational Component**
+  - Explore the ideas in the [Student Exercise](https://dg-inclass.github.io/sdev-2150/lessons/09/#student-exercise). What might yo do to create additional components to work with a `<Card>`?
+
+
+### Day 11 | Feb 13
+
+- **Today**
+  - ***Commentary** on where we left off in Lesson 9 in terms of the [page layout](./src/lesson-09/src/components/layout/PageLayout.jsx) and the [App](./src/lesson-09/src/App.jsx).*
+  - Lesson 10 - [Styling Components in React](https://dg-inclass.github.io/sdev-2150/lessons/10/)
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-10/example/lesson-10-starter ./src/lesson-10
+      ```
+
+- **Homework**
+  - Explore the ideas in the [Student Exercise](https://dg-inclass.github.io/sdev-2150/lessons/10/#student-exercise).
+
+
+### Day 12 | Feb 25
+
+- **Today**
+  - *Commentary on Friday Lunch Hour Availablity*
+  - Lesson 11
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-11/example/lesson-11-starter ./src/lesson-11
+      ```
+
+- **Homework**
+  - Read about [daisyUI themes](https://daisyui.com/docs/themes/) and explore their [Layout & Typography](https://daisyui.com/docs/layout-and-typography/)
+  - Play with various [daisyUI components](https://daisyui.com/components/)
+
+### Day 13 | Feb 27
+
+- **Today**
+  - Lesson 12 - `useState()` hook
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-12/example/lesson-12-starter ./src/lesson-12
+      ```
+
+- **Homework**
+  - Complete the exercise to [Clear Selected Filters](https://dg-inclass.github.io/sdev-2150/lessons/12/#student-exercise-clear-selected-filters)
+  - Complete the exercise to [Select Resource State](https://dg-inclass.github.io/sdev-2150/lessons/12/#student-exercise-selected-resource-state)
+
+### Day 14 | Mar 4
+
+- **Today**
+  - Assignment 2 - Changed Due Date
+  - Lesson 13 - Shared State
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-13/example/lesson-13-starter ./src/lesson-13
+      ```
+
+- **Homework**
+  - Read
+    - [Build-in React Hooks](https://react.dev/reference/react/hooks)
+    - [React calls Components and Hooks](https://react.dev/reference/rules/react-calls-components-and-hooks)
+    - [Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks)
+    - [Mastering React Hooks: From Basics to Custom Hooks (2026 Guide)](https://dev.to/iammuhammadarslan/mastering-react-hooks-from-basics-to-custom-hooks-2026-guide-34jc)
+
+### Day 15 | Mar 6
+
+- **Today**
+  - Lesson 13 - (Continued) Shared State
+  - Lesson 14 - Exercises
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-14 ./src/lesson-14
+      ```
+
+- **Homework**
+  - 
+
+### Day 16 | Mar 11
+
+- **Today**
+  - Lesson 15 - Custom Hooks and Session Storage ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/15/))
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-15/example/lesson-15-starter ./src/lesson-15
+      ```
+
+    - After running `pnpm install`, run `pnpm about` and watch the slideshow with me.
+- **Homework**
+
+### Day 17 | Mar 13
+
+- **Today**
+  - *Work Period*
+- **Homework**
+
+### Day 18 | Mar 18
+
+- **Today**
+  - Lesson 16 - Component Lifecycle in React ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/16/))
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-16/example/lesson-16-starter ./src/lesson-16
+      ```
+
+- **Homework**
+
+### Day 19 | Mar 20
+
+- **Today**
+  - 🧹 Finish Lesson 16 (resume [here](https://dg-inclass.github.io/sdev-2150/lessons/16/#phase-7-conditional-rendering-for-loading-and-errors))
+  - 💫 Begin Lesson 17 - Static Routing with React Router 7 ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/17/))
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-17/example/lesson-17-starter ./src/lesson-17
+      ```
+
+- **Homework**
+
+### Day 20 | Mar 25
+
+- **Today**
+  - Lesson 17 - Continued
+    - *Note:* We are using React Router's [*Component Routes*](https://reactrouter.com/start/framework/routing#component-routes) in our `main.jsx` and [`<NavLink>`](https://reactrouter.com/start/framework/navigating) in our `Header.jsx` component.
+    - Complete `AdminPage.jsx` to contain form for user input (resume [here](https://dg-inclass.github.io/sdev-2150/lessons/17/#phase-6-build-the-admin-page-shell))
+  - Lesson 18 - Dynamic Routing with React Router 7 ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/18/#connecting-to-prior-lessons))
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-18/example/lesson-18-starter ./src/lesson-18
+      ```
+
+- **Homework**
+  - Read the [**official React Router docs**](https://reactrouter.com/home) to get familiar with the various ways to use React Router.
+
+### Day 21 | Mar 27
+
+- **Today**
+  - Complete Lesson 18
+    - **Notes:**
+      - My routing problem from last class was because I *replaced* a route instead of *adding* the dynamic route. [Here's the fix.](https://github.com/DG-InClass/SDEV-2150-A03-Jan-2026/blob/main/src/lesson-18/frontend/src/main.jsx#L21-L24)
+      - I also [missed an import](https://github.com/DG-InClass/SDEV-2150-A03-Jan-2026/blob/main/src/lesson-18/frontend/src/components/ResourceForm.jsx#L2) in my `ResourceForm.jsx`
+      - Lastly, I omitted an [`isEditing` variable](https://github.com/DG-InClass/SDEV-2150-A03-Jan-2026/blob/main/src/lesson-18/frontend/src/pages/AdminPage.jsx#L118-L119) in the copy/paste code I provided.
+
+    - > *Want to just sync with my code at this point? You can use the command below.*
+      >
+      > ***WARNING!** Using the link below will replace your own code in your `src/lesson-18` folder.*
+      > 
+      > ```ps
+      > pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/src/lesson-18 ./src/lesson-18
+      > ```
+
+  - Lesson 19 - Data Fetching Strategies in React ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/19/)) (React Router 7 Data Mode)
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-19/example/lesson-19-starter ./src/lesson-19
+      ```
+
+- **Homework**
+
+### Day 22 | Apr 1
+
+- **Today**
+  - *Lesson 19 - See the **Homework** below*
+  - *Lesson 20 - This is a practice exercise*
+  - Lesson 21 - Client Rendering Strategies in React ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/21/)) ()
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-21/example/lesson-21-starter ./src/lesson-21
+      ```
+
+  - Lesson 22 - Server-Side Rendering in React ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/22/)) ()
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-22/example/lesson-22-starter ./src/lesson-22
+      ```
+
+- **Homework**
+  - Complete Lesson 19 (from  [here](https://dg-inclass.github.io/sdev-2150/lessons/19-wrapup/))
+
+### Day 23 | Apr 3
+
+- **✝️ Good Friday**
+
+### Day 24 | Apr 8
+
+- **Today**
+  - Lesson 22-A - Framework Mode in React Router for SSR
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-22/example/lesson-22-a-starter ./src/lesson-22-a
+      ```
+
+- **Homework**
+
+### Day 25 | Apr 10
+
+- **Today**
+  - Lesson 23 - React's Context API ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/23/)) (Shared Application State)
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-23/example/lesson-23-starter ./src/lesson-23
+      ```
+
+- **Homework**
+
+### Day 26 | Apr 15
+
+- **Today**
+  - Lesson 24 - Tanstack Query and Server-Side State ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/24-revamp/))
+    - **Re-download the Starter Kit** - We'll go through the **revamped** version
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-24/example/lesson-24-starter ./src/lesson-24
+      ```
+
+  - Lesson 25 - State Management Strategies ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/25/))
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-25/example/lesson-25-starter ./src/lesson-25
+      ```
+
+- **Homework**
+
+### Day 27 | Apr 17
+
+- **Today**
+  - Lesson 27 - Unit Testing React Applications ([Walkthrough](https://dg-inclass.github.io/sdev-2150/lessons/27/)) ()
+
+      ```ps
+      pnpm dlx tiged --disable-cache --force DG-InClass/SDEV-2150-A03-Jan-2026/sk/day-27/example/lesson-27-starter ./src/lesson-27
+      ```
+
+- **Homework**
+
+### Day 28 | Apr 22
+
+- **Today**
+- **Homework**
+
+### Day 29 | Apr 24
+
+- **Today**
+- **Homework**
