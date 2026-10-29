@@ -12,6 +12,13 @@ import AdminPage from './pages/AdminPage';
 
 import './index.css';
 
+const PageNotFound = () => (
+  <div>
+    <h2>404 Error</h2>
+    <p>Oops! The page you're looking for does not exist.</p>
+  </div>
+)
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -19,6 +26,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />}>
           <Route index element={<ResourceDirectoryPage />} />
           <Route path="admin" element={<AdminPage />} />
+          <Route path="admin/:resourceId" element={<AdminPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
